@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.26)
-project(Quick_Sort)
 
-set(CMAKE_CXX_STANDARD 20)
+project(Lab3 LANGUAGES CXX)
 
-add_executable(Quick_Sort main.cpp)
+include(FetchContent)
+
+add_subdirectory(src)
+add_subdirectory(apps)
+
+option(ENABLE_TESTING "Build the tests" ON)
+if (ENABLE_TESTING)
+    enable_testing()
+    add_subdirectory(tests)
+endif ()
