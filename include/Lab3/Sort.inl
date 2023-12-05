@@ -7,6 +7,25 @@ namespace detail {
 
 constexpr std::ptrdiff_t kMaxSizeForInsertionSort = 10;
 
+template<typename Iter, typename Compare>
+Iter partition(Iter first, Iter last, Compare comp) requires SortableWithComparator<Iter, Compare> {
+    Iter i = first, j = last - 1;
+    auto pivot = *(i + (j - i) / 2);
+
+    while (comp(*i, pivot)) i++;
+    while (comp(pivot, *j)) j--;
+
+    while (i < j) {
+        std::swap(*i, *j);
+        do i++;
+        while (comp(*i, pivot));
+        do j--;
+        while (comp(pivot, *j));
+    }
+
+    return j + 1;
+}
+
 }
 
 template<typename Iter, typename Compare>
@@ -21,7 +40,13 @@ void sort(Iter first, Iter last, Compare comp) requires SortableWithComparator<I
 
 template<typename Iter, typename Compare>
 void quick_sort(Iter first, Iter last, Compare comp) requires SortableWithComparator<Iter, Compare> {
-    // TODO
+    if (last - first <= 1) {
+        return;
+    }
+
+    Iter partition = detail::partition(first, last, comp);
+    sort(first, partition, comp);
+    sort(partition, last, comp);
 }
 
 template<typename Iter, typename Compare>
