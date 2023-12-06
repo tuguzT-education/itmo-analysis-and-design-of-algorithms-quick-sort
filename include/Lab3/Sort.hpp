@@ -35,13 +35,16 @@ concept SortableWithComparator = Iterator<Iter> && requires(Iter iter) {
 };
 
 template<typename Iter, typename Compare>
-void sort(Iter first, Iter last, Compare comp) requires SortableWithComparator<Iter, Compare>;
+requires SortableWithComparator<Iter, Compare>
+void sort(Iter first, Iter last, Compare comp);
 
 template<typename Iter, typename Compare>
-void quick_sort(Iter first, Iter last, Compare comp) requires SortableWithComparator<Iter, Compare>;
+requires SortableWithComparator<Iter, Compare>
+void quick_sort(Iter first, Iter last, Compare comp);
 
 template<typename Iter, typename Compare>
-void insertion_sort(Iter first, Iter last, Compare comp) requires SortableWithComparator<Iter, Compare>;
+requires SortableWithComparator<Iter, Compare>
+void insertion_sort(Iter first, Iter last, Compare comp);
 
 }
 
