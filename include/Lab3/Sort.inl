@@ -58,13 +58,16 @@ void sort(Iter first, Iter last, Compare comp) {
 template<typename Iter, typename Compare>
 requires SortableWithComparator<Iter, Compare>
 void quick_sort(Iter first, Iter last, Compare comp) {
-    if (last - first <= 1) {
-        return;
+    while (last - first > 1) {
+        Iter partition = detail::partition(first, last, comp);
+        if (partition - first < last - partition) {
+            lab3::sort(first, partition, comp);
+            first = partition;
+        } else {
+            lab3::sort(partition, last, comp);
+            last = partition;
+        }
     }
-
-    Iter partition = detail::partition(first, last, comp);
-    lab3::sort(first, partition, comp);
-    lab3::sort(partition, last, comp);
 }
 
 template<typename Iter, typename Compare>
