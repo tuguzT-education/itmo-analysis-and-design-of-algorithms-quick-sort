@@ -11,6 +11,9 @@ namespace detail {
 template<typename T>
 concept reference = std::is_reference_v<T>;
 
+template<typename T, typename U>
+concept lvalue_reference_of = std::same_as<T, std::add_lvalue_reference_t<U>>;
+
 }
 
 template<typename Iter>
@@ -18,9 +21,9 @@ concept Iterator = requires(Iter first, Iter last) {
     { *first } -> detail::reference;
     { first + 1 } -> std::same_as<Iter>;
     { first - 1 } -> std::same_as<Iter>;
-    { ++first } -> std::same_as<std::add_lvalue_reference_t<Iter>>;
-    { --first } -> std::same_as<std::add_lvalue_reference_t<Iter>>;
-    { last - first } -> std::integral;
+    { ++first } -> detail::lvalue_reference_of<Iter>;
+    { --first } -> detail::lvalue_reference_of<Iter>;
+    { last - first } -> std::signed_integral;
     { first <=> last } -> std::convertible_to<std::partial_ordering>;
 };
 
