@@ -24,21 +24,22 @@ static inline Iter median_of_three(Iter first, Iter last, Compare comp) {
 template<typename Iter, typename Compare>
 requires SortableWithComparator<Iter, Compare>
 static inline Iter partition(Iter first, Iter last, Compare comp) {
-    auto pivot = *median_of_three(first, last, comp);
+    Iter pivot = median_of_three(first, last, comp);
+    auto value = *pivot;
 
-    Iter i = first, j = last - 1;
-    while (comp(*i, pivot)) ++i;
-    while (comp(pivot, *j)) --j;
+    Iter left = first, right = last - 1;
+    while (true) {
+        while (comp(*left, value)) ++left;
+        while (comp(value, *right)) --right;
 
-    while (i < j) {
-        std::swap(*i, *j);
-        do ++i;
-        while (comp(*i, pivot));
-        do --j;
-        while (comp(pivot, *j));
+        if (left >= right) {
+            break;
+        }
+        std::swap(*left, *right);
+        ++left;
+        --right;
     }
-
-    return j + 1;
+    return right + 1;
 }
 
 }
