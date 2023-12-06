@@ -12,21 +12,21 @@ constexpr std::ptrdiff_t kMaxSizeForInsertionSort = 0;
 template<typename Iter, typename Compare>
 requires SortableWithComparator<Iter, Compare>
 static inline Iter median_of_three(Iter first, Iter last, Compare comp) {
-    Iter middle = first + (last - first) / 2;
+    Iter middle = first + (last - first - 1) / 2;
     auto predicate = [&comp](Iter a, Iter b) { return comp(*a, *b); };
 
     Iter min = std::min(first, middle, predicate);
     Iter max = std::max(first, middle, predicate);
-    Iter clamped = std::max(min, std::min(max, last, predicate), predicate);
+    Iter clamped = std::max(min, std::min(max, last - 1, predicate), predicate);
     return clamped;
 }
 
 template<typename Iter, typename Compare>
 requires SortableWithComparator<Iter, Compare>
 static inline Iter partition(Iter first, Iter last, Compare comp) {
-    Iter i = first, j = last - 1;
-    auto pivot = *median_of_three(i, j, comp);
+    auto pivot = *median_of_three(first, last, comp);
 
+    Iter i = first, j = last - 1;
     while (comp(*i, pivot)) ++i;
     while (comp(pivot, *j)) --j;
 
@@ -62,8 +62,8 @@ void quick_sort(Iter first, Iter last, Compare comp) {
     }
 
     Iter partition = detail::partition(first, last, comp);
-    sort(first, partition, comp);
-    sort(partition, last, comp);
+    lab3::sort(first, partition, comp);
+    lab3::sort(partition, last, comp);
 }
 
 template<typename Iter, typename Compare>
