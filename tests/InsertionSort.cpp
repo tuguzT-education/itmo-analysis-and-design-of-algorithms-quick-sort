@@ -2,6 +2,8 @@
 #include <Lab3/Sort.hpp>
 
 #include <array>
+#include <vector>
+#include <random>
 
 GTEST_TEST(InsertionSortTest, EmptyArray) {
     std::array<int, 0> array{};
@@ -45,4 +47,16 @@ GTEST_TEST(InsertionSortTest, RandomArray) {
 
     lab3::insertion_sort(array.begin(), array.end(), std::less());
     GTEST_ASSERT_TRUE(std::is_sorted(array.begin(), array.end(), std::less()));
+}
+
+GTEST_TEST(InsertionSortTest, LargeArray) {
+    constexpr std::size_t kLargeArraySize = 10'000;
+    std::mt19937 engine{0}; // NOLINT(cert-msc51-cpp)
+
+    std::vector<int> vector(kLargeArraySize);
+    std::generate(vector.begin(), vector.end(), engine);
+    GTEST_ASSERT_FALSE(std::is_sorted(vector.begin(), vector.end(), std::less()));
+
+    lab3::insertion_sort(vector.begin(), vector.end(), std::less());
+    GTEST_ASSERT_TRUE(std::is_sorted(vector.begin(), vector.end(), std::less()));
 }
