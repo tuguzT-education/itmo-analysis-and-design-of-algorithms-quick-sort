@@ -6,6 +6,7 @@ include(FetchContent)
 
 add_subdirectory(src)
 add_subdirectory(apps)
+add_subdirectory(benchmarks)
 
 option(ENABLE_TESTING "Build the tests" ON)
 if (ENABLE_TESTING)
