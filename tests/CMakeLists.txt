@@ -16,3 +16,7 @@ macro(add_google_test TEST_NAME TEST_ARGS)
     target_link_libraries(${TEST_NAME} GTest::gtest_main lab3)
     gtest_discover_tests(${TEST_NAME})
 endmacro()
+
+add_google_test(quick_sort_test QuickSort.cpp)
+add_google_test(insertion_sort_test InsertionSort.cpp)
+add_google_test(sort_test Sort.cpp)
