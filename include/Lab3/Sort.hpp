@@ -43,7 +43,7 @@ void sort(Iter first, Iter last, Compare comp);
 
 template<typename Iter, typename Compare>
 requires SortableWithComparator<Iter, Compare>
-void quick_sort(Iter first, Iter last, Compare comp);
+void quick_sort(Iter first, Iter last, Compare comp, bool optimize_tiny = false);
 
 template<typename Iter, typename Compare>
 requires SortableWithComparator<Iter, Compare>

@@ -51,20 +51,27 @@ void sort(Iter first, Iter last, Compare comp) {
     if (size <= detail::kMaxSizeForInsertionSort) {
         insertion_sort(first, last, comp);
     } else {
-        quick_sort(first, last, comp);
+        quick_sort(first, last, comp, true);
     }
 }
 
 template<typename Iter, typename Compare>
 requires SortableWithComparator<Iter, Compare>
-void quick_sort(Iter first, Iter last, Compare comp) {
+void quick_sort(Iter first, Iter last, Compare comp, const bool optimize_tiny) {
+    auto sort = [optimize_tiny](Iter first, Iter last, Compare comp) {
+        if (optimize_tiny) {
+            lab3::sort(first, last, comp);
+        } else {
+            lab3::quick_sort(first, last, comp);
+        }
+    };
     while (last - first > 1) {
         Iter partition = detail::partition(first, last, comp);
         if (partition - first < last - partition) {
-            lab3::sort(first, partition, comp);
+            sort(first, partition, comp);
             first = partition;
         } else {
-            lab3::sort(partition, last, comp);
+            sort(partition, last, comp);
             last = partition;
         }
     }

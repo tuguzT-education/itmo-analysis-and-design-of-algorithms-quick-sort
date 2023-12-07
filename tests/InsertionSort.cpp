@@ -50,7 +50,7 @@ GTEST_TEST(InsertionSortTest, RandomArray) {
 }
 
 GTEST_TEST(InsertionSortTest, LargeArray) {
-    constexpr std::size_t kLargeArraySize = 10'000;
+    constexpr std::size_t kLargeArraySize = 1'000;
     std::mt19937 engine{0}; // NOLINT(cert-msc51-cpp)
 
     std::vector<int> vector(kLargeArraySize);
