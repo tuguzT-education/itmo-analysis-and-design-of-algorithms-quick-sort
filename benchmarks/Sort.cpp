@@ -6,7 +6,7 @@
 #include <ranges>
 
 void Sort(benchmark::State &state) {
-    std::vector<std::string> vector;
+    std::vector<std::string> vector(state.range());
 
     auto transform = [](const auto arg) { return std::to_string(arg); };
     auto range = std::views::iota(std::int64_t{0}, state.range()) | std::views::transform(transform);
