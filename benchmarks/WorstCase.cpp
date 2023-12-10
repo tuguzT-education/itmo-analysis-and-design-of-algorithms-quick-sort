@@ -8,14 +8,17 @@
 template<typename Sort>
 void WorstCase(benchmark::State &state, Sort sort) {
     std::vector<std::string> vector;
-    vector.reserve(state.range());
 
-    auto transform = [](const auto arg) { return std::to_string(arg); };
-    auto range = std::views::iota(std::int64_t{0}, state.range()) | std::views::transform(transform);
+    const auto size = state.range(0);
+    vector.reserve(size);
+
+    auto to_string = [](const auto value) { return std::to_string(value); };
+    auto range = std::views::iota(0, size) | std::views::transform(to_string);
     std::ranges::copy(range.begin(), range.end(), std::back_inserter(vector));
 
     for ([[maybe_unused]] auto _ : state) {
         sort(vector.begin(), vector.end(), std::less());
+        benchmark::DoNotOptimize(vector);
     }
 }
 
