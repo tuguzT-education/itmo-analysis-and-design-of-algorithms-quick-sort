@@ -85,9 +85,14 @@ void insertion_sort(Iter first, Iter last, Compare comp) {
     }
 
     for (Iter i = first + 1; i != last; ++i) {
-        for (Iter j = i; j != first && comp(*j, *(j - 1)); --j) {
-            std::swap(*j, *(j - 1));
+        auto value = std::move(*i);
+        auto j = (i - first) - 1;
+
+        while (j >= 0 && comp(value, *(first + j))) {
+            *(first + (j + 1)) = std::move(*(first + j));
+            --j;
         }
+        *(first + (j + 1)) = std::move(value);
     }
 }
 

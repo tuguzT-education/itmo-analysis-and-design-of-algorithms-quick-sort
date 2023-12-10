@@ -25,7 +25,7 @@ GTEST_TEST(InsertionSortTest, OneItemArray) {
     GTEST_ASSERT_TRUE(std::is_permutation(array.begin(), array.end(), old.begin(), old.end()));
 }
 
-GTEST_TEST(InsertionSortTest, InsertionSortedArray) {
+GTEST_TEST(InsertionSortTest, SortedArray) {
     std::array array = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     GTEST_ASSERT_TRUE(std::is_sorted(array.begin(), array.end(), std::less()));
 
@@ -39,7 +39,7 @@ GTEST_TEST(InsertionSortTest, InsertionSortedArray) {
     GTEST_ASSERT_TRUE(std::is_permutation(array.begin(), array.end(), old.begin(), old.end()));
 }
 
-GTEST_TEST(InsertionSortTest, InsertionSortedStringArray) {
+GTEST_TEST(InsertionSortTest, SortedStringArray) {
     using namespace std::string_literals;
 
     std::array array = {"1"s, "2"s, "3"s, "4"s, "5"s, "6"s, "7"s, "8"s, "9"s};
@@ -55,7 +55,7 @@ GTEST_TEST(InsertionSortTest, InsertionSortedStringArray) {
     GTEST_ASSERT_TRUE(std::is_permutation(array.begin(), array.end(), old.begin(), old.end()));
 }
 
-GTEST_TEST(InsertionSortTest, ReverseInsertionSortedArray) {
+GTEST_TEST(InsertionSortTest, ReverseSortedArray) {
     std::array array = {9, 8, 7, 6, 5, 4, 3, 2, 1};
     GTEST_ASSERT_TRUE(std::is_sorted(array.begin(), array.end(), std::greater()));
 
@@ -65,7 +65,7 @@ GTEST_TEST(InsertionSortTest, ReverseInsertionSortedArray) {
     GTEST_ASSERT_TRUE(std::is_permutation(array.begin(), array.end(), old.begin(), old.end()));
 }
 
-GTEST_TEST(InsertionSortTest, ReverseInsertionSortedStringArray) {
+GTEST_TEST(InsertionSortTest, ReverseSortedStringArray) {
     using namespace std::string_literals;
 
     std::array array = {"9"s, "8"s, "7"s, "6"s, "5"s, "4"s, "3"s, "2"s, "1"s};
