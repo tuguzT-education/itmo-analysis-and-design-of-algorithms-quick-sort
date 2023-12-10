@@ -12,13 +12,24 @@ constexpr std::ptrdiff_t kMaxSizeForInsertionSort = 0;
 template<typename Iter, typename Compare>
 requires SortableWithComparator<Iter, Compare>
 static inline Iter median_of_three(Iter first, Iter last, Compare comp) {
-    Iter middle = first + (last - first - 1) / 2;
-    auto predicate = [&comp](Iter a, Iter b) { return comp(*a, *b); };
+    --last;
+    Iter middle = first + (last - first) / 2;
 
-    Iter min = std::min(first, middle, predicate);
-    Iter max = std::max(first, middle, predicate);
-    Iter clamped = std::max(min, std::min(max, last - 1, predicate), predicate);
-    return clamped;
+    if (comp(*last, *first)) {
+        if (comp(*middle, *last))
+            return last;
+        else if (comp(*middle, *first))
+            return middle;
+        else
+            return first;
+    } else {
+        if (comp(*middle, *first))
+            return first;
+        else if (comp(*middle, *last))
+            return middle;
+        else
+            return last;
+    }
 }
 
 template<typename Iter, typename Compare>
