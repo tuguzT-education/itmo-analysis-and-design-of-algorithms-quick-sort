@@ -7,7 +7,7 @@ namespace lab3 {
 
 namespace detail {
 
-constexpr std::ptrdiff_t kMaxSizeForInsertionSort = 0;
+constexpr std::ptrdiff_t kMaxSizeForInsertionSort = 32;
 
 template<typename Iter, typename Compare>
 requires SortableWithComparator<Iter, Compare>
